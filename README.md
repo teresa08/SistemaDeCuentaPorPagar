@@ -1,4 +1,4 @@
-# SistemasDeCuentaPorPagar
+# SistemaDeCuentaPorPagar
 
 CREATE DATABASE Cuentas_por_pagar;
 USE Cuentas_por_pagar
