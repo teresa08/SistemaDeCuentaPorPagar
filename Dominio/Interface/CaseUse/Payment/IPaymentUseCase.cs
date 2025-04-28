@@ -12,6 +12,7 @@ namespace Dominio.Interface.CaseUse.Payment
     public interface IPaymentUseCase
     {
         Task<MessageResponse<string>> AddPayment(PaymentReq payment);
+        Task<MessageResponse<string>> DeletePayment(int id);
         Task<MessageResponse<List<PaymentRes>>> GetPayments();
     }
 }

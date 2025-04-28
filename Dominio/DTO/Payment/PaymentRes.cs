@@ -8,6 +8,7 @@ namespace Dominio.DTO.Payment
 {
     public class PaymentRes
     {
+        public int Id { get; set; }
         public string RncCedula { get; set; }
         public DateOnly PaymentDate { get; set; }
         public decimal PaidAmount { get; set; }

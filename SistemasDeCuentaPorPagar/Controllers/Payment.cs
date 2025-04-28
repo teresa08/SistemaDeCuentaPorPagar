@@ -25,6 +25,18 @@ namespace SistemasDeCuentaPorPagar.Controllers
             }
             return Ok(res);
         }
+
+        [HttpPost("delete_payment/{id}")]
+        public async Task<IActionResult> DeletePayment([FromRoute] int id)
+        {
+            var res = await _PaymentUseCase.DeletePayment(id);
+            if (!res.IsSuccess)
+            {
+                return Problem(statusCode: res.StatuCode, detail: res.Message);
+            }
+            return Ok(res);
+        }
+
         [HttpGet("payments")]
         public async Task<IActionResult> GetPayments()
         {

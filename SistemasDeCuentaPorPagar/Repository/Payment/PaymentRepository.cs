@@ -43,7 +43,44 @@ namespace SistemasDeCuentaPorPagar.Repository.Payment
                 return new MessageResponse<string>
                 {
                     IsSuccess = true,
-                    Payload = "Successful",
+                    Message = "Successful",
+                    StatuCode = 201
+                };
+
+            }
+            catch (Exception ex)
+            {
+                return new MessageResponse<string>
+                {
+                    IsSuccess = false,
+                    Message = "Ha ocurrido un problema en el servidor",
+                    StatuCode = 500
+                };
+
+            }
+        }
+
+        public async Task<MessageResponse<string>> DeletePayment(int id)
+        {
+            try
+            {
+                var Payment = await _CuentasPorPagarContext.Payments.Where(i => i.Id == id).FirstOrDefaultAsync();
+                if(Payment == null)
+                {
+                    return new MessageResponse<string>
+                    {
+                        IsSuccess = false,
+                        Message = "Pago no registrado",
+                        StatuCode = 500
+                    };
+                }
+                _CuentasPorPagarContext.Payments.Remove(Payment);
+                _CuentasPorPagarContext.SaveChanges();
+
+                return new MessageResponse<string>
+                {
+                    IsSuccess = true,
+                    Message = "Pago eliminado",
                     StatuCode = 201
                 };
 
@@ -76,6 +113,7 @@ namespace SistemasDeCuentaPorPagar.Repository.Payment
                                      PaymentDate = payment.PaymentDate,
                                      PaymentMethod = payment.PaymentMethod,
                                      RncCedula = supplier.RncCedula,
+                                     Id = payment.Id
                                  }).ToListAsync();
 
                 return new MessageResponse<List<PaymentRes>>

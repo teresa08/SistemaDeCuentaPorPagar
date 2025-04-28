@@ -22,6 +22,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(option =>
+{
+    option.AddDefaultPolicy(e =>
+          e.WithOrigins("*")
+          .AllowAnyMethod()
+          .AllowAnyHeader());
+});
+
+
 builder.Services.AddScoped<IInvoiceUseCase, InvoiceUseCase>();
 builder.Services.AddScoped<IInvoiceRep, InvoiceRepository>();
 
@@ -51,5 +60,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors();
 
 app.Run();

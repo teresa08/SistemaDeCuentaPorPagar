@@ -15,7 +15,7 @@ namespace SistemasDeCuentaPorPagar.Controllers
         {
             _InvoiceUseCase = invoiceUseCase;
         }
-        [HttpPost("invoice_new")]
+        [HttpPost("new_invoice")]
         public async Task<IActionResult> AddInvoice([FromBody] InvoiceReq invoice)
         {
             var res = await _InvoiceUseCase.AddInvoice(invoice);
@@ -27,10 +27,10 @@ namespace SistemasDeCuentaPorPagar.Controllers
              return Ok(res);
         }
 
-        [HttpPost("{invoiceNumber}/update")]
-        public async Task<IActionResult> UpdateInvoice([FromBody] InvoiceReq invoice, [FromRoute] string invoiceNumber )
+        [HttpPost("update_invoice")]
+        public async Task<IActionResult> UpdateInvoice([FromBody] InvoiceReq invoice)
         {
-            var res = await _InvoiceUseCase.UpdateInvoice(invoice, invoiceNumber);
+            var res = await _InvoiceUseCase.UpdateInvoice(invoice);
 
             if (!res.IsSuccess)
             {
@@ -38,7 +38,7 @@ namespace SistemasDeCuentaPorPagar.Controllers
             }
             return Ok(res);
         }
-        [HttpGet("{invoiceNumber}")]
+        [HttpGet("invoice/{invoiceNumber}")]
         public async Task<IActionResult> GetInvoice([FromRoute] string invoiceNumber)
         {
             var res = await _InvoiceUseCase.GetInvoice(invoiceNumber);

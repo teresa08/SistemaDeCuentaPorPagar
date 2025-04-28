@@ -25,6 +25,11 @@ namespace Aplication.Payment
             return await _PaymentRep.AddPayment(invoice); 
         }
 
+        public async Task<MessageResponse<string>> DeletePayment(int id)
+        {
+            return await _PaymentRep.DeletePayment(id);
+        }
+
         public async Task<MessageResponse<List<PaymentRes>>> GetPayments()
         {
             return await _PaymentRep.GetPayments();

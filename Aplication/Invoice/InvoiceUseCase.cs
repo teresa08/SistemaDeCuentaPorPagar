@@ -38,9 +38,9 @@ namespace Aplication.Invoice
             return await _InvoiceRep.GetInvoices();
         }
 
-        public async Task<MessageResponse<string>> UpdateInvoice(InvoiceReq suppliers, string invoiceNumber)
+        public async Task<MessageResponse<string>> UpdateInvoice(InvoiceReq suppliers)
         {
-            return await _InvoiceRep.UpdateInvoice(suppliers, invoiceNumber);
+            return await _InvoiceRep.UpdateInvoice(suppliers);
         }
     }
 }

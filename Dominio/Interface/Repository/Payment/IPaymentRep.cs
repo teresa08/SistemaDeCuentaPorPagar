@@ -12,6 +12,7 @@ namespace Dominio.Interface.Repository.Payment
     public interface IPaymentRep
     {
         Task<MessageResponse<string>> AddPayment(PaymentReq payment);
+        Task<MessageResponse<string>> DeletePayment(int id);
         Task<MessageResponse<List<PaymentRes>>> GetPayments();
     }
 }

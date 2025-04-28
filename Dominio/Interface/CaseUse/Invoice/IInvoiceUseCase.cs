@@ -14,7 +14,7 @@ namespace Dominio.Interface.CaseUse.Invoices
     public interface IInvoiceUseCase
     {
         Task<MessageResponse<string>> AddInvoice(InvoiceReq invoice);
-        Task<MessageResponse<string>> UpdateInvoice(InvoiceReq invoice, string invoiceNumber);
+        Task<MessageResponse<string>> UpdateInvoice(InvoiceReq invoice);
         Task<MessageResponse<InvoiceRes>> GetInvoice(string invoiceNumber);
         Task<MessageResponse<List<InvoiceRes>>> GetInvoices();
         Task<MessageResponse<List<string>>> GetInvoiceNumbers();

@@ -27,7 +27,7 @@ namespace SistemasDeCuentaPorPagar.Controllers
             return Ok(res);
         }
 
-        [HttpPost("delete/{rnc_Cedula}")]
+        [HttpPost("delete_supplier/{rnc_Cedula}")]
         public async Task<IActionResult> DeleteSupplier([FromRoute] string rnc_Cedula)
         {
             var res = await _SupplierManagementUseCase.DeleteSupplier(rnc_Cedula);
@@ -37,7 +37,7 @@ namespace SistemasDeCuentaPorPagar.Controllers
             }
             return Ok(res);
         }
-        [HttpPost("update")]
+        [HttpPost("update_supplier")]
         public async Task<IActionResult> UpdateSupplier([FromBody] SupplierReq suppliers)
         {
             var res = await _SupplierManagementUseCase.UpdateSupplier(suppliers);
@@ -48,7 +48,7 @@ namespace SistemasDeCuentaPorPagar.Controllers
             return Ok(res);
         }
 
-        [HttpGet("{rnc_Cedula}")]
+        [HttpGet("supplier/{rnc_Cedula}")]
         public async Task<IActionResult> GetSupplier([FromRoute] string rnc_Cedula)
         {
             var res = await _SupplierManagementUseCase.GetSupplier(rnc_Cedula);

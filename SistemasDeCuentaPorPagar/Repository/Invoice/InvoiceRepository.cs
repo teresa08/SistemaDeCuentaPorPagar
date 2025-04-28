@@ -26,20 +26,15 @@ namespace SistemasDeCuentaPorPagar.Repository.Invoice
                 var supplierID = _CuentasPorPagarContext.Suppliers.Where(s => s.RncCedula == invoice.RncOrCedula).Select(s => s.Id).FirstOrDefault();
 
                 if (supplierID <= 0)
-                    return new MessageResponse<string>
-                    {
-                        IsSuccess = false,
-                        Message = "El suplidor no existe",
-                        StatuCode = 404
-                    };
+                    return new MessageResponse<string> { IsSuccess = false, Message = "El suplidor no existe", StatuCode = 404 };
 
-
-                var lastInvoiceNumber = await _CuentasPorPagarContext.Invoices.Where(i => i.SupplierId == supplierID).Select(i => i.InvoiceNumber).LastOrDefaultAsync();
+                if (await _CuentasPorPagarContext.Invoices.AnyAsync(i => i.InvoiceNumber == invoice.InvoiceNumber))
+                    return new MessageResponse<string> { IsSuccess = false, Message = "Esta factura ya eta registrada", StatuCode = 404 };
 
                 await _CuentasPorPagarContext.Invoices.AddAsync(new DB_Data_Context.Invoice
                 {
                     SupplierId = supplierID,
-                    InvoiceNumber = (Int32.Parse(lastInvoiceNumber) + 1).ToString(),
+                    InvoiceNumber = invoice.InvoiceNumber,
                     IssueDate = invoice.IssueDate,
                     ExpirationDate = invoice.ExpirationDate,
                     TotalAmount = invoice.TotalAmount,
@@ -159,11 +154,12 @@ namespace SistemasDeCuentaPorPagar.Repository.Invoice
             }
         }
 
-        public async Task<MessageResponse<string>> UpdateInvoice(InvoiceReq suppliers, string invoiceNumber)
+        public async Task<MessageResponse<string>> UpdateInvoice(InvoiceReq invoice)
         {
             try
             {
-                var invoice = _CuentasPorPagarContext.Invoices.Where(i => i.InvoiceNumber == invoiceNumber).FirstOrDefault();
+                var _invoice = _CuentasPorPagarContext.Invoices.Where(i => i.InvoiceNumber == invoice.InvoiceNumber).FirstOrDefault();
+                var supplierID = _CuentasPorPagarContext.Suppliers.Where(s => s.RncCedula == invoice.RncOrCedula).Select(s => s.Id).FirstOrDefault();
 
                 if (invoice == null)
                     return new MessageResponse<string>
@@ -174,18 +170,18 @@ namespace SistemasDeCuentaPorPagar.Repository.Invoice
                     };
 
 
-                suppliers.State = invoice.State;
-                suppliers.IssueDate = invoice.IssueDate;
-                suppliers.ExpirationDate = invoice.ExpirationDate;
-                suppliers.RncOrCedula = invoice.InvoiceNumber;
-                suppliers.TotalAmount = invoice.TotalAmount;
+                _invoice.State = invoice.State;
+                _invoice.IssueDate = invoice.IssueDate;
+                _invoice.ExpirationDate = invoice.ExpirationDate;
+                _invoice.SupplierId = supplierID;
+                _invoice.TotalAmount = invoice.TotalAmount;
 
                 _CuentasPorPagarContext.SaveChanges();
 
                 return new MessageResponse<string>
                 {
                     IsSuccess = true,
-                    Payload = "Successful",
+                    Message = "Successful",
                     StatuCode = 200
                 };
 

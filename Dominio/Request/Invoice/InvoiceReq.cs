@@ -13,6 +13,7 @@ namespace Dominio.Request.Invoices
         public DateOnly ExpirationDate { get; set; }
         public decimal TotalAmount { get; set; }
         public string State { get; set; }
+        public string InvoiceNumber { get; set; }
 
     }
 }

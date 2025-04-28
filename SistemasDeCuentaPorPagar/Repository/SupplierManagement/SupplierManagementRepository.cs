@@ -35,7 +35,7 @@ namespace SistemasDeCuentaPorPagar.Repository.SupplierManagement
                     return new MessageResponse<string>
                     {
                         IsSuccess = false,
-                        Message = $"Este {suppliers.Rnc_Cedula} suplidor ys existe",
+                        Message = $"Este suplidor {suppliers.Rnc_Cedula}  ya existe",
                         StatuCode = 404
                     };
                 }
@@ -54,7 +54,7 @@ namespace SistemasDeCuentaPorPagar.Repository.SupplierManagement
                 return new MessageResponse<string>
                 {
                     IsSuccess = true,
-                    Payload = $"{suppliers.Rnc_Cedula} agregado",
+                    Message = $"{suppliers.Rnc_Cedula} agregado",
                     StatuCode = 201
                 };
             }
@@ -91,7 +91,7 @@ namespace SistemasDeCuentaPorPagar.Repository.SupplierManagement
                 return new MessageResponse<string>
                 {
                     IsSuccess = true,
-                    Payload = $"{rnc_Cedula} eliminado",
+                    Message = $"{rnc_Cedula} eliminado",
                     StatuCode = 200
                 };
             }
